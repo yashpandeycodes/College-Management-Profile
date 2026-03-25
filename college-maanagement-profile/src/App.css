@@ -1,0 +1,366 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f5f9;
+}
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    height: 60px;
+    background: #111827;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+}
+
+.sidebar {
+    width: 230px;
+    background: #1f2937;
+    color: white;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+
+.sidebar a:hover {
+    background: #374151;
+}
+
+.content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.card {
+    background: white;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 420px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+}
+
+.btn-primary {
+    padding: 10px 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    padding: 8px 10px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.item-card {
+    border: 1px solid #e5e7eb;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fafafa;
+}
+
+.page-title {
+    margin-top: 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    background: white;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.brand-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+.brand-subtitle {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-pill {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 999px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.user-email {
+    font-size: 14px;
+}
+
+.user-role {
+    background: #2563eb;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.sidebar-heading {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    margin-bottom: 12px;
+}
+
+.sidebar a.active {
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+}
+
+.login-page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.5), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.45), transparent 35%),
+        linear-gradient(135deg, #0f172a, #111827, #1e293b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(2px);
+}
+
+.login-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.login-left-panel {
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-left-panel h1 {
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+
+.login-left-panel p {
+    font-size: 18px;
+    line-height: 1.7;
+    opacity: 0.9;
+    max-width: 600px;
+}
+
+.login-feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.feature-chip {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    color: white;
+    font-size: 14px;
+}
+
+.login-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+    color: white;
+    transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+}
+
+.login-card h2 {
+    margin-top: 0;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.login-subtext {
+    opacity: 0.85;
+    margin-bottom: 20px;
+}
+
+.login-card input,
+.simple-auth-card input,
+.simple-auth-card select,
+.simple-auth-card textarea,
+.login-card select,
+.login-card textarea {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.login-btn {
+    margin-top: 6px;
+}
+
+.forgot-text {
+    margin-top: 16px;
+}
+
+.forgot-text a {
+    color: white;
+    text-decoration: none;
+}
+
+.simple-auth-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #dbeafe, #eef2ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.simple-auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 900px) {
+    .login-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .login-left-panel {
+        padding: 10px 0;
+    }
+
+    .login-left-panel h1 {
+        font-size: 34px;
+    }
+
+    .login-card {
+        transform: none;
+    }
+
+    .sidebar {
+        width: 190px;
+    }
+}
+.calendar-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-right: 8px;
+    background: #e5e7eb;
+}
+
+.priority-high {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.priority-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.priority-low {
+    background: #dcfce7;
+    color: #166534;
+}
