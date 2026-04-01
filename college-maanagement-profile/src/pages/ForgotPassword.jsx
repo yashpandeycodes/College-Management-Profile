@@ -3,7 +3,7 @@ import axios from "axios";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [resetLink, setResetLink] = useState("");
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,8 +14,8 @@ function ForgotPassword() {
         { email }
       );
 
-      setResetLink(res.data.resetLink);
       alert("Reset link generated");
+      setEmail("");
     } catch (error) {
       console.log(error);
       alert(error?.response?.data?.message || "Error");
@@ -42,12 +42,6 @@ function ForgotPassword() {
           </button>
         </form>
 
-        {resetLink && (
-          <div className="card" style={{ marginTop: "16px" }}>
-            <p><strong>Reset Link:</strong></p>
-            <a href={resetLink}>{resetLink}</a>
-          </div>
-        )}
       </div>
     </div>
   );

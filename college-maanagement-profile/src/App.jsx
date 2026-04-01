@@ -1,18 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./pages/login";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyOtp from "./pages/VerifyOtp";
 import PrivateRoute from "./components/PrivateRoute";
 
-// admin
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminCourses from "./pages/Admin/AdminCourses";
 import AdminCalendar from "./pages/Admin/AdminCalendar";
 import AdminLogs from "./pages/Admin/AdminLogs";
 
-// professor
 import ProfessorDashboard from "./pages/professor/ProfessorDashboard";
 import ProfessorAssignments from "./pages/professor/ProfessorAssignments";
 import ProfessorTests from "./pages/professor/ProfessorTests";
@@ -22,7 +20,6 @@ import ProfessorAttendance from "./pages/professor/ProfessorAttendance";
 import ProfessorAnalytics from "./pages/professor/ProfessorAnalytics";
 import ProfessorCalendar from "./pages/professor/ProfessorCalendar";
 
-// student
 import StudentDashboard from "./pages/student/StudentDashboard";
 import StudentAssignments from "./pages/student/StudentAssignments";
 import StudentTests from "./pages/student/StudentTests";

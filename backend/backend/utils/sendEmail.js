@@ -14,11 +14,12 @@ const sendEmail = async (to, subject, text) => {
     });
 
     console.log("Email sent");
+    return true;
 
   } catch (error) {
 
     console.log("Email error:", error);
-
+     return false;
   }
 
 };

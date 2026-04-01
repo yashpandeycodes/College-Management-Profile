@@ -13,8 +13,6 @@ import CalendarEvent from "../models/CalendarEvent.js";
 
 const router = express.Router();
 
-
-// Get assignments (professor)
 router.get("/assignments",
   authMiddleware,
   roleMiddleware("professor"),
@@ -35,7 +33,6 @@ router.get("/assignments",
 );
 
 
-// Add assignment
 router.post("/assignments",
   authMiddleware,
   roleMiddleware("professor"),
@@ -63,8 +60,6 @@ router.post("/assignments",
   }
 );
 
-
-// Delete assignment
 
 router.delete(
   "/assignments/:id",

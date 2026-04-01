@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema(
       required: true
     },
 
-    // Login OTP for 2FA
     otpCode: {
       type: String,
       default: null
@@ -35,18 +34,6 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
-    // Forgot password OTP
-    resetOtp: {
-      type: String,
-      default: null
-    },
-
-    resetOtpExpiry: {
-      type: Date,
-      default: null
-    },
-
-    // Password reset link/token
     resetPasswordToken: {
       type: String,
       default: null

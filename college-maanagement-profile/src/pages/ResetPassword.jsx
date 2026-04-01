@@ -26,23 +26,25 @@ function ResetPassword() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Reset Password</h2>
+    <div className="simple-auth-page">
+      <div className="simple-auth-card">
+        <h2>Reset Password</h2>
+        <p className="login-subtext">Choose a new secure password</p>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "300px" }}
-      >
-        <input
-          type="password"
-          placeholder="Enter new password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-        />
+        <form className="form-grid" onSubmit={handleSubmit}>
+          <input
+            type="password"
+            placeholder="Enter new password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
 
-        <button type="submit">Reset Password</button>
-      </form>
+          <button className="btn-primary" type="submit">
+            Reset Password
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

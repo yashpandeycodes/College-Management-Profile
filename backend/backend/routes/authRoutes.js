@@ -67,35 +67,43 @@ router.post("/login", async (req, res) => {
 
 router.post("/forgot-password", async (req, res) => {
   try {
+    const { email } = req.body;
 
-  const { email } = req.body;
+    const user = await User.findOne({ email });
 
-  const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-  if (!user) {
-    return res.status(400).json({ message: "User not found" });
-  }
+    const resetToken = crypto.randomBytes(32).toString("hex");
 
-  const otp = Math.floor(100000 + Math.random() * 900000);
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
 
-  user.resetOtp = otp;
-  user.resetOtpExpiry = Date.now() + 5 * 60 * 1000;
+    await user.save();
 
-  await user.save();
+    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
 
-  await sendEmail(
-    user.email,
-    "Password Reset OTP",
-    `Your OTP is ${otp}`
-  );
+    console.log("FORGOT EMAIL:", user.email);
+    console.log("RESET LINK:", resetLink);
 
-  res.json({
-    message: "OTP sent to email"
-  });
+    const emailSent = await sendEmail(
+      user.email,
+      "Password Reset Link",
+      `Click this link to reset your password:\n\n${resetLink}\n\nThis link is valid for 15 minutes.`
+    );
 
+    console.log("EMAIL SENT STATUS:", emailSent);
 
+    if (!emailSent) {
+      return res.status(500).json({ message: "Failed to send reset link email" });
+    }
+
+    res.json({
+      message: "Reset password link sent to your email"
+    });
   } catch (error) {
-    console.log(error);
+    console.log("FORGOT PASSWORD ERROR:", error);
     res.status(500).json({ message: "Error generating reset link" });
   }
 });
@@ -182,28 +190,4 @@ router.post("/verify-otp", async (req, res) => {
     res.status(500).json({ message: "OTP verification error" });
   }
 });
-
-router.post("/verify-reset-otp", async (req, res) => {
-
-  const { email, otp } = req.body;
-
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    return res.status(400).json({ message: "User not found" });
-  }
-
-  if (
-    user.resetOtp !== Number(otp) ||
-    user.resetOtpExpiry < Date.now()
-  ) {
-    return res.status(400).json({ message: "Invalid OTP" });
-  }
-
-  res.json({
-    message: "OTP verified"
-  });
-
-});
-
 export default router;

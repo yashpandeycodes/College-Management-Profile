@@ -10,7 +10,6 @@ import Test from "../models/Test.js";
 import TestSubmission from "../models/TestSubmission.js";
 const router = express.Router();
 
-// student can view all assignments
 router.get(
   "/assignments",
   authMiddleware,
@@ -25,7 +24,6 @@ router.get(
   }
 );
 
-// student can submit assignment
 router.post(
   "/submit/:assignmentId",
   authMiddleware,

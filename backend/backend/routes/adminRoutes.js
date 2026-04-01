@@ -8,7 +8,6 @@ import CalendarEvent from "../models/CalendarEvent.js";
 import LoginLog from "../models/LoginLog.js";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
-import { getPriority } from "os";
 
 const router = express.Router();
 
@@ -37,7 +36,7 @@ router.post("/users", authMiddleware, roleMiddleware("admin"), async (req, res) 
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // temporary placeholder password
+
     const tempPassword = await bcrypt.hash("temp123456", 10);
 
     const resetToken = crypto.randomBytes(32).toString("hex");
@@ -78,7 +77,6 @@ router.delete("/users/:id", authMiddleware, roleMiddleware("admin"), async (req,
   }
 });
 
-// Get all courses - admin only
 router.get("/courses", authMiddleware, roleMiddleware("admin"), async (req, res) => {
   try {
     const courses = await Course.find().populate("professor", "name email");
@@ -88,7 +86,6 @@ router.get("/courses", authMiddleware, roleMiddleware("admin"), async (req, res)
   }
 });
 
-// Add course - admin only
 router.post("/courses", authMiddleware, roleMiddleware("admin"), async (req, res) => {
   try {
     const { title, code, professor } = req.body;
@@ -112,7 +109,7 @@ router.post("/courses", authMiddleware, roleMiddleware("admin"), async (req, res
   }
 });
 
-// Delete course - admin only
+
 router.delete("/courses/:id", authMiddleware, roleMiddleware("admin"), async (req, res) => {
   try {
     await Course.findByIdAndDelete(req.params.id);
