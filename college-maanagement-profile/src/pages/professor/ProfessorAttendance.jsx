@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -16,7 +17,7 @@ function ProfessorAttendance() {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/professor/students", {
+      const res = await api.get(`/api/professor/students`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStudents(res.data);
@@ -27,7 +28,7 @@ function ProfessorAttendance() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/professor/courses", {
+      const res = await api.get(`/api/professor/courses`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCourses(res.data);
@@ -53,7 +54,7 @@ function ProfessorAttendance() {
   const handleUploadAttendance = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/professor/attendance", attendanceData, {
+      await api.post(`/api/professor/attendance`, attendanceData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

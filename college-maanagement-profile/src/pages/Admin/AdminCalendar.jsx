@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -18,7 +19,7 @@ function AdminCalendar() {
 
   const fetchCalendarEvents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/calendar", {
+      const res = await api.get(`/api/admin/calendar`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCalendarEvents(res.data);
@@ -41,7 +42,7 @@ function AdminCalendar() {
   const handleAddCalendarEvent = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/calendar", calendarData, {
+      await api.post(`/api/admin/calendar`, calendarData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -60,7 +61,7 @@ function AdminCalendar() {
 
   const handleDeleteCalendarEvent = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/calendar/${id}`, {
+      await api.delete(`/api/admin/calendar/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchCalendarEvents();

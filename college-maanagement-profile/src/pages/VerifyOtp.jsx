@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../api/axios";
 import { AuthContext } from "../context/AuthProvider";
 
 function VerifyOtp() {
@@ -15,8 +16,8 @@ function VerifyOtp() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
+      const res = await api.post(
+        `/api/auth/verify-otp`,
         {
           email,
           otp

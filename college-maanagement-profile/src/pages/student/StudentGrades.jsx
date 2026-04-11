@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -9,7 +10,7 @@ function StudentGrades() {
 
   const fetchGrades = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/grades", {
+      const res = await api.get(`/api/student/grades`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setGrades(res.data);

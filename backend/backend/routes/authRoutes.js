@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
 
   await user.save();
 
-  res.json({ message: "User registered" });
+  res.status(201).json({ message: "User registered" });
 });
 
 router.post("/login", async (req, res) => {
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
       `Your OTP is ${otp}`
     );
 
-    res.json({
+    res.status(201).json({
       message: "OTP sent to email",
       otpRequired: true,
       email: user.email
@@ -82,7 +82,7 @@ router.post("/forgot-password", async (req, res) => {
 
     await user.save();
 
-    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetLink = `${process.env.SET_PASSWORD_LINK}/${resetToken}`;
 
     console.log("FORGOT EMAIL:", user.email);
     console.log("RESET LINK:", resetLink);
@@ -99,7 +99,7 @@ router.post("/forgot-password", async (req, res) => {
       return res.status(500).json({ message: "Failed to send reset link email" });
     }
 
-    res.json({
+    res.status(401).json({
       message: "Reset password link sent to your email"
     });
   } catch (error) {
@@ -130,7 +130,7 @@ router.post("/reset-password/:token", async (req, res) => {
 
     await user.save();
 
-    res.json({ message: "Password set/reset successfully" });
+    res.status(201).json({ message: "Password set/reset successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error resetting password" });

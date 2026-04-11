@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -9,7 +10,7 @@ function StudentCalendar() {
 
   const fetchCalendar = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/calendar", {
+      const res = await api.get(`/api/student/calendar`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCalendar(res.data);

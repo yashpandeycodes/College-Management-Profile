@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -11,7 +12,7 @@ function StudentAssignments() {
 
   const fetchAssignments = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/assignments", {
+      const res = await api.get(`/api/student/assignments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssignments(res.data);
@@ -33,8 +34,8 @@ function StudentAssignments() {
 
   const handleSubmitAssignment = async (assignmentId) => {
     try {
-      await axios.post(
-        `http://localhost:5000/api/student/submit/${assignmentId}`,
+      await api.post(
+        `/api/student/submit/${assignmentId}`,
         { content: submissionTexts[assignmentId] || "" },
         { headers: { Authorization: `Bearer ${token}` } }
       );

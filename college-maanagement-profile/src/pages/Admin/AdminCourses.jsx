@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -14,7 +15,7 @@ function AdminCourses() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/courses", {
+      const res = await api.get(`/api/admin/courses`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCourses(res.data);
@@ -37,7 +38,7 @@ function AdminCourses() {
   const handleAddCourse = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/courses", courseData, {
+      await api.post(`/api/admin/courses`, courseData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -51,7 +52,7 @@ function AdminCourses() {
 
   const handleDeleteCourse = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/courses/${id}`, {
+      await api.delete(`/api/admin/courses/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchCourses();

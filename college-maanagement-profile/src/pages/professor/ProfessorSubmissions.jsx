@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -11,7 +12,7 @@ function ProfessorSubmissions() {
 
   const fetchSubmissions = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/professor/submissions", {
+      const res = await api.get(`/api/professor/submissions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSubmissions(res.data);
@@ -22,7 +23,7 @@ function ProfessorSubmissions() {
 
   const fetchTestSubmissions = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/professor/test-submissions", {
+      const res = await api.get(`/api/professor/test-submissions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTestSubmissions(res.data);
@@ -40,7 +41,7 @@ function ProfessorSubmissions() {
 
   const handleDeleteSubmission = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/professor/submissions/${id}`, {
+      await api.delete(`/api/professor/submissions/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchSubmissions();

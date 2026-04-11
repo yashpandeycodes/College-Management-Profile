@@ -52,7 +52,7 @@ router.post("/users", authMiddleware, roleMiddleware("admin"), async (req, res) 
 
     await user.save();
 
-    const setPasswordLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const setPasswordLink = `${process.env.SET_PASSWORD_LINK}/${resetToken}`;
 
     await sendEmail(
       user.email,

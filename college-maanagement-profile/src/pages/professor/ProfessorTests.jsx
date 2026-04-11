@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../api/axios";
 import Layout from "../../components/Layout";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -17,7 +18,7 @@ function ProfessorTests() {
 
   const fetchTests = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/professor/tests", {
+      const res = await api.get(`/api/professor/tests`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTests(res.data);
@@ -28,7 +29,7 @@ function ProfessorTests() {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/professor/courses", {
+      const res = await api.get(`/api/professor/courses`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCourses(res.data);
@@ -54,7 +55,7 @@ function ProfessorTests() {
   const handleAddTest = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/professor/tests", testData, {
+      await api.post(`/api/professor/tests`, testData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -74,7 +75,7 @@ function ProfessorTests() {
 
   const handleDeleteTest = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/professor/tests/${id}`, {
+      await api.delete(`/api/professor/tests/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchTests();
