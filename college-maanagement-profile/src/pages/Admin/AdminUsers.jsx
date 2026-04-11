@@ -16,9 +16,7 @@ function AdminUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await api.get(`/api/admin/users`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/admin/users`);
       setUsers(res.data);
     } catch (error) {
       console.log(error);
@@ -39,9 +37,7 @@ function AdminUsers() {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/admin/users`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/api/admin/users`, formData);
 
       setFormData({
         name: "",
@@ -58,9 +54,7 @@ function AdminUsers() {
 
   const handleDeleteUser = async (id) => {
     try {
-      await api.delete(`/api/admin/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/admin/users/${id}`);
       fetchUsers();
     } catch (error) {
       console.log(error);

@@ -10,9 +10,7 @@ function AdminLogs() {
 
   const fetchLoginLogs = async () => {
     try {
-      const res = await api.get(`/api/admin/login-logs`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/admin/login-logs`);
       setLoginLogs(res.data);
     } catch (error) {
       console.log(error);

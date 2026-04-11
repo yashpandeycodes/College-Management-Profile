@@ -12,9 +12,7 @@ function StudentAssignments() {
 
   const fetchAssignments = async () => {
     try {
-      const res = await api.get(`/api/student/assignments`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/assignments`);
       setAssignments(res.data);
     } catch (error) {
       console.log(error);
@@ -37,7 +35,7 @@ function StudentAssignments() {
       await api.post(
         `/api/student/submit/${assignmentId}`,
         { content: submissionTexts[assignmentId] || "" },
-        { headers: { Authorization: `Bearer ${token}` } }
+       
       );
       alert("Assignment submitted successfully");
     } catch (error) {

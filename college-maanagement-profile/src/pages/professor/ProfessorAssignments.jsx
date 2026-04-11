@@ -16,9 +16,7 @@ function ProfessorAssignments() {
 
   const fetchAssignments = async () => {
     try {
-      const res = await api.get(`/api/professor/assignments`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/assignments`);
       setAssignments(res.data);
     } catch (error) {
       console.log(error);
@@ -39,9 +37,7 @@ function ProfessorAssignments() {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/professor/assignments`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/api/professor/assignments`, formData);
 
       setFormData({ title: "", description: "", dueDate: "" });
       fetchAssignments();
@@ -53,9 +49,7 @@ function ProfessorAssignments() {
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/api/professor/assignments/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/professor/assignments/${id}`);
       fetchAssignments();
     } catch (error) {
       console.log(error);

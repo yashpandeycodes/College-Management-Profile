@@ -12,9 +12,7 @@ function StudentTests() {
 
   const fetchTests = async () => {
     try {
-      const res = await api.get(`/api/student/tests`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/tests`);
       setTests(res.data);
     } catch (error) {
       console.log(error);
@@ -37,7 +35,7 @@ function StudentTests() {
       await api.post(
         `/api/student/submit-test/${testId}`,
         { content: testTexts[testId] || "" },
-        { headers: { Authorization: `Bearer ${token}` } }
+        
       );
       alert("Test submitted successfully");
     } catch (error) {

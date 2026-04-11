@@ -10,9 +10,7 @@ function ProfessorAnalytics() {
 
   const fetchAnalytics = async () => {
     try {
-      const res = await api.get(`/api/professor/analytics`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/analytics`);
       setAnalytics(res.data);
     } catch (error) {
       console.log(error);

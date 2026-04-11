@@ -12,9 +12,7 @@ function ProfessorSubmissions() {
 
   const fetchSubmissions = async () => {
     try {
-      const res = await api.get(`/api/professor/submissions`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/submissions`);
       setSubmissions(res.data);
     } catch (error) {
       console.log(error);
@@ -23,9 +21,7 @@ function ProfessorSubmissions() {
 
   const fetchTestSubmissions = async () => {
     try {
-      const res = await api.get(`/api/professor/test-submissions`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/test-submissions`);
       setTestSubmissions(res.data);
     } catch (error) {
       console.log(error);
@@ -41,9 +37,7 @@ function ProfessorSubmissions() {
 
   const handleDeleteSubmission = async (id) => {
     try {
-      await api.delete(`/api/professor/submissions/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/professor/submissions/${id}`);
       fetchSubmissions();
     } catch (error) {
       console.log(error);

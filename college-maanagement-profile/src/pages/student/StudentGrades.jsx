@@ -10,9 +10,7 @@ function StudentGrades() {
 
   const fetchGrades = async () => {
     try {
-      const res = await api.get(`/api/student/grades`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/grades`);
       setGrades(res.data);
     } catch (error) {
       console.log(error);

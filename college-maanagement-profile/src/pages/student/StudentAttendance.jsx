@@ -10,9 +10,7 @@ function StudentAttendance() {
 
   const fetchAttendance = async () => {
     try {
-      const res = await api.get(`/api/student/attendance`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/attendance`);
       setAttendance(res.data);
     } catch (error) {
       console.log(error);

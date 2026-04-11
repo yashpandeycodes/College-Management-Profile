@@ -19,9 +19,7 @@ function AdminCalendar() {
 
   const fetchCalendarEvents = async () => {
     try {
-      const res = await api.get(`/api/admin/calendar`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/admin/calendar`);
       setCalendarEvents(res.data);
     } catch (error) {
       console.log(error);
@@ -42,9 +40,7 @@ function AdminCalendar() {
   const handleAddCalendarEvent = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/admin/calendar`, calendarData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/api/admin/calendar`);
 
       setCalendarData({
         title: "",
@@ -61,9 +57,7 @@ function AdminCalendar() {
 
   const handleDeleteCalendarEvent = async (id) => {
     try {
-      await api.delete(`/api/admin/calendar/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/admin/calendar/${id}`);
       fetchCalendarEvents();
     } catch (error) {
       console.log(error);

@@ -10,9 +10,7 @@ function ProfessorCalendar() {
 
   const fetchCalendar = async () => {
     try {
-      const res = await api.get(`/api/professor/calendar`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/calendar`);
       setCalendar(res.data);
     } catch (error) {
       console.log(error);

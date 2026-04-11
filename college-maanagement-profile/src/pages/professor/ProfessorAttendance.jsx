@@ -17,9 +17,7 @@ function ProfessorAttendance() {
 
   const fetchStudents = async () => {
     try {
-      const res = await api.get(`/api/professor/students`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/students`);
       setStudents(res.data);
     } catch (error) {
       console.log(error);
@@ -28,9 +26,7 @@ function ProfessorAttendance() {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get(`/api/professor/courses`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/courses`);
       setCourses(res.data);
     } catch (error) {
       console.log(error);
@@ -54,9 +50,7 @@ function ProfessorAttendance() {
   const handleUploadAttendance = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/professor/attendance`, attendanceData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/api/professor/attendance`, attendanceData);
 
       setAttendanceData({
         student: "",

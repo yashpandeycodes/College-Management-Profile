@@ -15,9 +15,7 @@ function AdminCourses() {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get(`/api/admin/courses`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/admin/courses`);
       setCourses(res.data);
     } catch (error) {
       console.log(error);
@@ -38,9 +36,7 @@ function AdminCourses() {
   const handleAddCourse = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/admin/courses`, courseData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/api/admin/courses`);
 
       setCourseData({ title: "", code: "" });
       fetchCourses();
@@ -52,9 +48,7 @@ function AdminCourses() {
 
   const handleDeleteCourse = async (id) => {
     try {
-      await api.delete(`/api/admin/courses/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/admin/courses/${id}`);
       fetchCourses();
     } catch (error) {
       console.log(error);

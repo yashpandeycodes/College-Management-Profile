@@ -18,9 +18,7 @@ function ProfessorTests() {
 
   const fetchTests = async () => {
     try {
-      const res = await api.get(`/api/professor/tests`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/tests`);
       setTests(res.data);
     } catch (error) {
       console.log(error);
@@ -29,9 +27,7 @@ function ProfessorTests() {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get(`/api/professor/courses`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/professor/courses`);
       setCourses(res.data);
     } catch (error) {
       console.log(error);
@@ -55,9 +51,7 @@ function ProfessorTests() {
   const handleAddTest = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/professor/tests`, testData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/api/professor/tests`, testData, );
 
       setTestData({
         title: "",
@@ -75,9 +69,7 @@ function ProfessorTests() {
 
   const handleDeleteTest = async (id) => {
     try {
-      await api.delete(`/api/professor/tests/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/api/professor/tests/${id}`);
       fetchTests();
     } catch (error) {
       console.log(error);

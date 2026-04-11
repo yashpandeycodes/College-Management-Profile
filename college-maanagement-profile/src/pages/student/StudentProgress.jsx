@@ -13,9 +13,7 @@ function StudentProgress() {
 
   const fetchAssignments = async () => {
     try {
-      const res = await api.get(`/api/student/assignments`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/assignments`);
       setAssignments(res.data);
     } catch (error) {
       console.log(error);
@@ -24,9 +22,7 @@ function StudentProgress() {
 
   const fetchGrades = async () => {
     try {
-      const res = await api.get(`/api/student/grades`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/grades`);
       setGrades(res.data);
     } catch (error) {
       console.log(error);
@@ -35,9 +31,7 @@ function StudentProgress() {
 
   const fetchAttendance = async () => {
     try {
-      const res = await api.get(`/api/student/attendance`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/api/student/attendance`);
       setAttendance(res.data);
     } catch (error) {
       console.log(error);
