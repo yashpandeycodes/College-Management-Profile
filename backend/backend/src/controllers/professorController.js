@@ -1,7 +1,5 @@
-import express from "express";
+
 import Assignment from "../models/Assignment.js";
-import authMiddleware from "../middleware/authMiddleware.js";
-import roleMiddleware from "../middleware/roleMiddleware.js";
 import Submission from "../models/Submission.js";
 import Grade from "../models/Grade.js";
 import Attendance from "../models/Attendance.js";
@@ -11,12 +9,7 @@ import Test from "../models/Test.js";
 import TestSubmission from "../models/TestSubmission.js";
 import CalendarEvent from "../models/CalendarEvent.js";
 
-const router = express.Router();
-
-router.get("/assignments",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+const GetAssignment=async (req, res) => {
 
     try {
 
@@ -30,13 +23,8 @@ router.get("/assignments",
       res.status(500).json({ message: "Error fetching assignments" });
     }
   }
-);
 
-
-router.post("/assignments",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+const PostAssignment=async (req, res) => {
 
     try {
 
@@ -58,14 +46,8 @@ router.post("/assignments",
       res.status(500).json({ message: "Error adding assignment" });
     }
   }
-);
 
-
-router.delete(
-  "/assignments/:id",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const DeleteAssignment= async (req, res) => {
     try {
       const assignment = await Assignment.findOneAndDelete({
         _id: req.params.id,
@@ -81,13 +63,8 @@ router.delete(
       res.status(500).json({ message: "Error deleting" });
     }
   }
-);
 
-router.get(
-  "/submissions",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const GetSubmissions= async (req, res) => {
     try {
       const assignments = await Assignment.find({ professor: req.user.id }).select("_id");
 
@@ -104,13 +81,8 @@ router.get(
       res.status(500).json({ message: "Error fetching submissions" });
     }
   }
-);
 
-router.delete(
-  "/submissions/:id",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const DeleteSubmissions= async (req, res) => {
     try {
       const submission = await Submission.findById(req.params.id).populate("assignment");
 
@@ -129,13 +101,8 @@ router.delete(
       res.status(500).json({ message: "Error deleting submission" });
     }
   }
-);
 
-router.get(
-  "/students",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const GetStudents= async (req, res) => {
     try {
       const students = await User.find({ role: "student" }).select("name email");
       res.json(students);
@@ -143,13 +110,8 @@ router.get(
       res.status(500).json({ message: "Error fetching students" });
     }
   }
-);
 
-router.get(
-  "/courses",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const GetCourses= async (req, res) => {
     try {
       const courses = await Course.find().select("title code");
       res.json(courses);
@@ -157,56 +119,46 @@ router.get(
       res.status(500).json({ message: "Error fetching courses" });
     }
   }
-);
 
-router.get(
-  "/analytics",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
-    try {
-      const totalStudents = await User.countDocuments({ role: "student" });
-
-      const totalSubmissions = await Submission.countDocuments();
-
-      const grades = await Grade.find();
-
-      const attendance = await Attendance.find();
-
-      let avgMarks = 0;
-      let avgAttendance = 0;
-
-      if (grades.length > 0) {
-        avgMarks =
-          grades.reduce((sum, g) => sum + (g.marks || 0), 0) /
-          grades.length;
+  const GetAnalytics= async (req, res) => {
+      try {
+        const totalStudents = await User.countDocuments({ role: "student" });
+  
+        const totalSubmissions = await Submission.countDocuments();
+  
+        const grades = await Grade.find();
+  
+        const attendance = await Attendance.find();
+  
+        let avgMarks = 0;
+        let avgAttendance = 0;
+  
+        if (grades.length > 0) {
+          avgMarks =
+            grades.reduce((sum, g) => sum + (g.marks || 0), 0) /
+            grades.length;
+        }
+  
+        if (attendance.length > 0) {
+          avgAttendance =
+            attendance.reduce((sum, a) => sum + (a.percentage || 0), 0) /
+            attendance.length;
+        }
+  
+        res.json({
+          totalStudents,
+          totalSubmissions,
+          avgMarks: avgMarks.toFixed(2),
+          avgAttendance: avgAttendance.toFixed(2)
+        });
+  
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error fetching analytics" });
       }
-
-      if (attendance.length > 0) {
-        avgAttendance =
-          attendance.reduce((sum, a) => sum + (a.percentage || 0), 0) /
-          attendance.length;
-      }
-
-      res.json({
-        totalStudents,
-        totalSubmissions,
-        avgMarks: avgMarks.toFixed(2),
-        avgAttendance: avgAttendance.toFixed(2)
-      });
-
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error fetching analytics" });
     }
-  }
-);
 
-router.post(
-  "/grades",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+    const PostGrades=  async (req, res) => {
     try {
       const { student, course, marks } = req.body;
 
@@ -231,57 +183,43 @@ router.post(
       res.status(500).json({ message: "Error uploading grade" });
     }
   }
-);
 
-router.post(
-  "/attendance",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
-    try {
-      const { student, course, percentage } = req.body;
+  const PostAttendance= async (req, res) => {
+      try {
+        const { student, course, percentage } = req.body;
+  
+        const existingAttendance = await Attendance.findOne({ student, course });
+  
+        if (existingAttendance) {
+          existingAttendance.percentage = percentage;
+          await existingAttendance.save();
+          return res.json({ message: "Attendance updated successfully" });
+        }
+  
+        const attendance = new Attendance({
+          student,
+          course,
+          percentage
+        });
+  
+        await attendance.save();
+  
+        res.json({ message: "Attendance uploaded successfully" });
+      } catch (error) {
+        res.status(500).json({ message: "Error uploading attendance" });
+      }
+    }
 
-      const existingAttendance = await Attendance.findOne({ student, course });
-
-      if (existingAttendance) {
-        existingAttendance.percentage = percentage;
-        await existingAttendance.save();
-        return res.json({ message: "Attendance updated successfully" });
+    const GetTest= async (req, res) => {
+        try {
+          const tests = await Test.find({ professor: req.user.id }).populate("course", "title code");
+          res.json(tests);
+        } catch (error) {
+          res.status(500).json({ message: "Error fetching tests" });
+        }
       }
 
-      const attendance = new Attendance({
-        student,
-        course,
-        percentage
-      });
-
-      await attendance.save();
-
-      res.json({ message: "Attendance uploaded successfully" });
-    } catch (error) {
-      res.status(500).json({ message: "Error uploading attendance" });
-    }
-  }
-);
-router.get(
-  "/tests",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
-    try {
-      const tests = await Test.find({ professor: req.user.id }).populate("course", "title code");
-      res.json(tests);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching tests" });
-    }
-  }
-);
-
-router.post(
-  "/tests",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+      const PostTest= async (req, res) => {
     try {
       const { title, course, maxMarks, dueDate } = req.body;
 
@@ -300,13 +238,8 @@ router.post(
       res.status(500).json({ message: "Error adding test" });
     }
   }
-);
 
-router.delete(
-  "/tests/:id",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const DeleteTest=async (req, res) => {
     try {
       await Test.findOneAndDelete({
         _id: req.params.id,
@@ -318,13 +251,8 @@ router.delete(
       res.status(500).json({ message: "Error deleting test" });
     }
   }
-);
 
-router.get(
-  "/test-submissions",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const GetTestSubmission= async (req, res) => {
     try {
       const tests = await Test.find({ professor: req.user.id }).select("_id");
       const testIds = tests.map((t) => t._id);
@@ -340,13 +268,8 @@ router.get(
       res.status(500).json({ message: "Error fetching test submissions" });
     }
   }
-);
 
-router.get(
-  "/calendar",
-  authMiddleware,
-  roleMiddleware("professor"),
-  async (req, res) => {
+  const GetCalendar=async (req, res) => {
     try {
       const events = await CalendarEvent.find({
         audience: { $in: ["All", "Professors"] }
@@ -357,8 +280,5 @@ router.get(
       res.status(500).json({ message: "Error fetching calendar" });
     }
   }
-);
 
-
-
-export default router;
+  export default {GetAnalytics,GetAssignment,GetCalendar,GetCourses,GetStudents,GetSubmissions,GetTest,GetTestSubmission,PostAssignment,PostAttendance,PostGrades,PostTest,DeleteAssignment,DeleteSubmissions,DeleteTest};

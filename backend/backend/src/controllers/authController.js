@@ -1,4 +1,3 @@
-import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -6,9 +5,7 @@ import crypto from "crypto";
 import LoginLog from "../models/LoginLog.js";
 import sendEmail from "../utils/sendEmail.js";
 
-const router = express.Router();
-
-router.post("/register", async (req, res) => {
+const PostRegister= async (req, res) => {
   const { name, email, password, role } = req.body;
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,9 +20,9 @@ router.post("/register", async (req, res) => {
   await user.save();
 
   res.status(201).json({ message: "User registered" });
-});
+}
 
-router.post("/login", async (req, res) => {
+const PostLogin= async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -63,9 +60,9 @@ router.post("/login", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Login error" });
   }
-});
+}
 
-router.post("/forgot-password", async (req, res) => {
+const PostForgotPassword=async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -106,9 +103,9 @@ router.post("/forgot-password", async (req, res) => {
     console.log("FORGOT PASSWORD ERROR:", error);
     res.status(500).json({ message: "Error generating reset link" });
   }
-});
+}
 
-router.post("/reset-password/:token", async (req, res) => {
+const PostResetPassword=async (req, res) => {
   try {
     const { newPassword } = req.body;
     const { token } = req.params;
@@ -135,9 +132,9 @@ router.post("/reset-password/:token", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "Error resetting password" });
   }
-});
+}
 
-router.post("/verify-otp", async (req, res) => {
+const PostVerifyOtp=async (req, res) => {
   try {
     const { email, otp } = req.body;
 
@@ -189,5 +186,6 @@ router.post("/verify-otp", async (req, res) => {
     console.log(error);
     res.status(500).json({ message: "OTP verification error" });
   }
-});
-export default router;
+}
+
+export default {PostRegister,PostLogin,PostForgotPassword,PostVerifyOtp,PostResetPassword};

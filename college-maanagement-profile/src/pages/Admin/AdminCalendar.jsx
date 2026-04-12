@@ -40,7 +40,7 @@ function AdminCalendar() {
   const handleAddCalendarEvent = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/admin/calendar`);
+      await api.post(`/api/admin/calendar`,calendarData);
 
       setCalendarData({
         title: "",

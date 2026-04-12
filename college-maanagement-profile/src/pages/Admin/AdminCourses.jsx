@@ -36,13 +36,13 @@ function AdminCourses() {
   const handleAddCourse = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/api/admin/courses`);
+      await api.post(`/api/admin/courses`,courseData);
 
       setCourseData({ title: "", code: "" });
       fetchCourses();
     } catch (error) {
       console.log(error);
-      alert(error?.response?.data?.message || "Failed to add course");
+      alert(error?.response?.data?.error ||error?.response?.data?.message || "Failed to add course");
     }
   };
 
